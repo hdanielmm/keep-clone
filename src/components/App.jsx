@@ -1,32 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
 import { connect } from "react-redux";
-import { addNote } from "../actions/actionCreators";
+import { addNote, deleteNote } from "../actions/actionCreators";
 
-const App = ({ notes, addNote }) => {
-  const [notas, setNotes] = useState([]);
+const App = ({ notes, addNote, deleteNote }) => {
+  // const [notas, setNotes] = useState([]);
 
-  // function addNote(newNote) {
-  //   setNotes([...notes, newNote]);
+  // function deleteNote(id) {
+  //   setNotes(notas.filter((note, index) => {
+  //     return index !== id
+  //   }));
   // }
-
-  function deleteNote(id) {
-    setNotes(notas.filter((note, index) => {
-      return index !== id
-    }));
-  }
   
-  console.log("estado en app", notes);
-
   return (
     <div>
       <Header />
-      <CreateArea
-        onAdd={addNote}
-      />
+      <CreateArea onAdd={addNote} />
       {notes.map((note, index) => (
         <Note
           key={index}
@@ -41,7 +33,6 @@ const App = ({ notes, addNote }) => {
   )
 }
 
-// recibe un estado y retorna un objeto
 const mapStateToProps = state => ({
   notes: state.noteReducer
 });
@@ -49,6 +40,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => ({
   addNote: note => {
     dispatch(addNote(note));
+  },
+  deleteNote: id => {
+    dispatch(deleteNote(id));
   }
 });
 
