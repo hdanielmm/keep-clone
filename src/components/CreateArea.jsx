@@ -16,21 +16,6 @@ function CreateArea(props) {
   function handleChange(e) {
     const { name, value } = e.target;
 
-    // setNote((prevValue) => {
-    //   if (name === "title") {
-    //     return {
-    //       title: value,
-    //       content: prevValue.content
-    //     };
-    //   } else if (name === "content") {
-    //     return {
-    //       title: prevValue.title,
-    //       content: value
-    //     }
-    //   }
-    // });
-
-    // This way to setNote make the same that above way
     setNote((prevNote) => {
       return {
         ...prevNote,
@@ -40,11 +25,16 @@ function CreateArea(props) {
   }
 
   function handleClick(e) {
-    props.onAdd(note);
-    setNote({
-      title: "",
-      content: ""
-    });
+    if(note.title !== "" || note.content !== "") {
+      props.onAdd(note);
+      setNote({
+        title: "",
+        content: ""
+      });
+    } else {
+      alert("Nothing to add.");
+    }
+    
     e.preventDefault();
     setIsExpanded(false);
   }

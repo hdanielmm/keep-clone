@@ -3,19 +3,23 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
+import { connect } from "react-redux";
+import { addNote } from "../actions/actionCreators";
 
-function App() {
-  const [notes, setNotes] = useState([]);
+const App = ({ notes, addNote }) => {
+  const [notas, setNotes] = useState([]);
 
-  function addNote(newNote) {
-    setNotes([...notes, newNote]);
-  }
+  // function addNote(newNote) {
+  //   setNotes([...notes, newNote]);
+  // }
 
-  function deleteNote(id){
-    setNotes(notes.filter((note, index) => {
+  function deleteNote(id) {
+    setNotes(notas.filter((note, index) => {
       return index !== id
     }));
   }
+  
+  console.log("estado en app", notes);
 
   return (
     <div>
@@ -37,4 +41,16 @@ function App() {
   )
 }
 
-export default App;
+// recibe un estado y retorna un objeto
+const mapStateToProps = state => ({
+  notes: state.noteReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addNote: note => {
+    dispatch(addNote(note));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
