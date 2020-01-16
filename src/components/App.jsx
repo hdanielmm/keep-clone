@@ -1,48 +1,30 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import Note from "./Note";
 import CreateArea from "./CreateArea";
 import { connect } from "react-redux";
-import { addNote, deleteNote } from "../actions/actionCreators";
+import { addNote } from "../actions/actionCreators";
+import ShowNotes from "./ShowNotes";
 
-const App = ({ notes, addNote, deleteNote }) => {
-  // const [notas, setNotes] = useState([]);
-
-  // function deleteNote(id) {
-  //   setNotes(notas.filter((note, index) => {
-  //     return index !== id
-  //   }));
-  // }
+const App = ({ addNote }) => {
   
   return (
     <div>
       <Header />
       <CreateArea onAdd={addNote} />
-      {notes.map((note, index) => (
-        <Note
-          key={index}
-          id={index}
-          title={note.title}
-          content={note.content}
-          onDelete={deleteNote}
-        />
-      ))}
+      <ShowNotes />
       <Footer />
     </div>
   )
 }
 
 const mapStateToProps = state => ({
-  notes: state.noteReducer
+  notes: state.noteReducer.notes
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addNote: note => {
     dispatch(addNote(note));
-  },
-  deleteNote: id => {
-    dispatch(deleteNote(id));
   }
 });
 
