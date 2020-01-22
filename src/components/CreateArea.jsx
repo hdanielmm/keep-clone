@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
+import { connect } from 'react-redux';
+import { addNote } from '../actions/actionCreators'
 
-const CreateArea = props => {
+const CreateArea = ({ addNote }) => {
 
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -11,7 +13,6 @@ const CreateArea = props => {
     title: "",
     content: ""
   });
-
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -25,8 +26,8 @@ const CreateArea = props => {
   }
 
   function handleClick(e) {
-    if(note.title !== "" || note.content !== "") {
-      props.onAdd(note);
+    if (note.title !== "" || note.content !== "") {
+      addNote(note);
       setNote({
         title: "",
         content: ""
@@ -34,7 +35,7 @@ const CreateArea = props => {
     } else {
       alert("Nothing to add.");
     }
-    
+
     e.preventDefault();
     setIsExpanded(false);
   }
@@ -46,22 +47,22 @@ const CreateArea = props => {
   return (
     <div>
       <form className="create-note">
-        {isExpanded && (
-          <input
-            name="title"
-            value={note.title}
-            placeholder="Title"
-            onChange={handleChange}
-          />
-        )}
-        <textarea
-          name="content"
-          value={note.content}
-          placeholder="Take a note..."
+        <input
+          name="title"
+          value={note.title}
+          placeholder="Title"
           onChange={handleChange}
           onClick={expandNote}
           rows={isExpanded ? "3" : "1"}
         />
+        {isExpanded && (
+          <textarea
+            name="content"
+            value={note.content}
+            placeholder="Take a note..."
+            onChange={handleChange}
+          />
+        )}
         <Zoom in={isExpanded}>
           <Fab onClick={handleClick}>
             <AddIcon />
@@ -72,4 +73,14 @@ const CreateArea = props => {
   )
 }
 
-export default CreateArea;
+const mapStateToProps = state => ({
+  notes: state.noteReducer.notes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addNote: note => {
+    dispatch(addNote(note));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateArea);

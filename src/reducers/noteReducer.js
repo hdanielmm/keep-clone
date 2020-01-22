@@ -5,6 +5,7 @@ const initialState = {
 };
 
 export const noteReducer = (state = initialState, action) => {
+  console.log('localStorage', localStorage.localNote);
   switch (action.type) {
     case ADD_NOTE:
       return {
