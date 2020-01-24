@@ -7,7 +7,7 @@ import ShowNotes from "./ShowNotes";
 const App = () => {
   
   return (
-    <div>
+    <div className="container">
       <Header />
       <CreateArea />
       <ShowNotes />

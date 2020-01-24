@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Note from "./Note";
-import { deleteNote } from '../actions/actionCreators';
+import { deleteNote, updateNote } from '../actions/actionCreators';
 
-const ShowNotes = ({ notes, deleteNote }) => {
+const ShowNotes = ({ notes, deleteNote, updateNote }) => {
   return (
     <div>
       {notes.map((note, index) => (
@@ -13,6 +13,7 @@ const ShowNotes = ({ notes, deleteNote }) => {
           title={note.title}
           content={note.content}
           onDelete={deleteNote}
+          onUpdate={updateNote}
         />
       ))}
     </div>
@@ -27,7 +28,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   deleteNote: id => {
-    dispatch(deleteNote(id))
+    dispatch(deleteNote(id));
+  },
+  updateNote: (note) => {
+    dispatch(updateNote(note));
   }
 });
 

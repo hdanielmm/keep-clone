@@ -61,7 +61,6 @@ const CreateArea = ({ addNote }) => {
             value={note.content}
             placeholder="Take a note..."
             onChange={handleChange}
-            onBlur={handleClick}
           />
         )}
         <Zoom in={isExpanded}>
