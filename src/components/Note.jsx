@@ -60,7 +60,7 @@ function Note(props) {
       {
         isEditableContent ? (
           <form>
-            <input
+            <textarea
               name="content"
               value={updatedNote.content}
               onChange={handleChange}

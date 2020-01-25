@@ -24,7 +24,6 @@ export const noteReducer = (state = initialState, action) => {
       const updatenote = state.notes.filter((note, index)=> {
         if (index === action.payload.id) {
          return (note.title = action.payload.title, note.content = action.payload.content);
-        // return action.payload;
         } else {
           return note;
         }
