@@ -20,12 +20,11 @@ export const noteReducer = (state = initialState, action) => {
         notes: newNotes
       };
     case UPDATE_NOTE:
-      console.log("update", action.payload.title);
-      // const a = state.notes.map((note, i) => console.log('note update', note, "i", action.payload.id))
-      // break;
+      console.log('action.payload', action.payload);
       const updatenote = state.notes.filter((note, index)=> {
         if (index === action.payload.id) {
-         return note.title = action.payload.title;
+         return (note.title = action.payload.title, note.content = action.payload.content);
+        // return action.payload;
         } else {
           return note;
         }

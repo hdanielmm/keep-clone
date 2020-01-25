@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 
 function Note(props) {
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditableTitle, setIsEditableTitle] = useState(false);
+  const [isEditableContent, setIsEditableContent] = useState(false)
 
   const [updatedNote, setUpdatedNote] = useState({
     id: props.id,
@@ -17,8 +17,8 @@ function Note(props) {
     props.onDelete(props.id);
   }
 
-  const handleUpdate = () => {
-    setIsEditable(true);
+  const handleUpdate = (e) => {
+    e.target.localName === "p" ? setIsEditableContent(true) : setIsEditableTitle(true);
   }
 
   const handleChange = e => {
@@ -35,32 +35,46 @@ function Note(props) {
   const handleOnBlur = () => {
     props.onUpdate(updatedNote);
 
-    setIsEditable(false);
+    setIsEditableTitle(false);
+    setIsEditableContent(false);
   }
 
   return (
     <div className="note" key={props.id}>
       {
-        isEditable ? (
+        isEditableTitle ? (
           <form>
             <input
               name="title"
               value={updatedNote.title}
               onChange={handleChange}
               onBlur={handleOnBlur}
+              autoFocus
             />
           </form>
         ) : (
-            <h1>{props.title}</h1>
+            <h1 onClick={handleUpdate}>{props.title}</h1>
           )
       }
-      <p>{props.content}</p>
+
+      {
+        isEditableContent ? (
+          <form>
+            <input
+              name="content"
+              value={updatedNote.content}
+              onChange={handleChange}
+              onBlur={handleOnBlur}
+              autoFocus
+            />
+          </form>
+        ) : (
+            <p onClick={handleUpdate}>{props.content}</p>
+          )
+      }
 
       <button onClick={handleClick}>
         <DeleteIcon />
-      </button>
-      <button onClick={handleUpdate}>
-        <EditIcon />
       </button>
 
     </div>
